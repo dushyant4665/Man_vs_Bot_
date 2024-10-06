@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { getTasks, createTask } from '../api'; // Ensure these imports match the API functions
+import { getTasks, createTask } from '../api';
 
 const TaskList = () => {
-    const [tasks, setTasks] = useState([]);
+    const [tasks, setTasks] =useState([]);
 
     useEffect(() => {
         const fetchTasks = async () => {
@@ -20,7 +20,7 @@ const TaskList = () => {
     const handleCreateTask = async (taskData) => {
         try {
             await createTask(taskData);
-            // Optionally refresh tasks or show a success message
+         
         } catch (error) {
             console.error('Failed to create task', error);
         }
