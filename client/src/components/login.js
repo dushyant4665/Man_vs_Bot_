@@ -2,50 +2,49 @@ import React, { useState } from 'react';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [captchaValue, setCaptchaValue] = useState(null);
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(false);
+  const [username,setUsername]=useState('');
+  const [password,setPassword] = useState('');
+  const [captchaValue,setCaptchaValue] =useState(null);
+  const [error, setError] =useState(null);
+  const [success, setSuccess] =useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e)=>{
     e.preventDefault();
     setError(null);
     setSuccess(false);
-
+    
     if (!captchaValue) {
       setError('Please complete the CAPTCHA.');
       return;
     }
-
     try {
-      const captchaResponse = await fetch('/api/verify-captcha', { 
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const captchaResponse =await fetch('/api/verify-captcha', { 
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
         },
-        body: JSON.stringify({ captchaToken: captchaValue }),
+        body:JSON.stringify({ captchaToken: captchaValue }),
       });
 
-      const captchaResult = await captchaResponse.json();
+      const captchaResult =await captchaResponse.json();
 
       if (captchaResponse.ok && captchaResult.success) {
-        // CAPTCHA verified, proceed with login
-        const response = await fetch('/api/login', { // Replace with your login API endpoint
+
+        const response =await fetch('/api/login',{ 
           method: 'POST',
-          headers: {
+          headers:{
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({ username, password }),
         });
 
-        if (response.ok) {
-          // Successful login
-          const data = await response.json(); 
-          // ... handle login success (e.g., store token, redirect)
+        if (response.ok){
+
+          const data =await response.json(); 
+    
           setSuccess(true); 
         } else {
-          // Handle login errors (e.g., display error message)
+  
           setError('Invalid username or password.');
         }
       } else {
