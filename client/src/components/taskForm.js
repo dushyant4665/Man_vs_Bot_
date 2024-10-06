@@ -15,8 +15,8 @@ const TaskForm = () => {
     e.preventDefault();
     try {
       await createTask(formData);
-      // Redirect or show success message
-    } catch (error) {
+
+    }catch(error){
       console.error('Task creation failed', error);
     }
   };
@@ -26,7 +26,7 @@ const TaskForm = () => {
       <input
         type="text"
         placeholder="Title"
-        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+        onChange={(e)=>setFormData({ ...formData, title: e.target.value })}
       />
       <textarea
         placeholder="Description"
@@ -40,7 +40,7 @@ const TaskForm = () => {
         <option value="High">High</option>
       </select>
       <select
-        onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+        onChange={(e)=>setFormData({ ...formData, status:e.target.value })}
       >
         <option value="To Do">To Do</option>
         <option value="In Progress">In Progress</option>
