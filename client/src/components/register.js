@@ -1,27 +1,26 @@
 import React, { useState } from 'react';
-import HCaptcha from '@hcaptcha/react-hcaptcha'; // Importing hCaptcha component
+import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { register } from '../api';
 import Login from './login';
 
 const Register = () => {
-  const [formData, setFormData] = useState({ email: '', password: '' });
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(false);
-  const [captchaValue, setCaptchaValue] = useState(null);
+  const [formData, setFormData] =useState({ email: '', password: '' });
+  const [error, setError] =useState(null);
+  const [success, setSuccess] =useState(false);
+  const [captchaValue, setCaptchaValue] =useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
     setSuccess(false);
 
-    // Check if the CAPTCHA is completed
+
     if (!captchaValue) {
       alert('Please complete the CAPTCHA.');
       return;
     }
 
     try {
-      // Assuming you have an endpoint to verify CAPTCHA
       const captchaResponse = await fetch('http://localhost:5000/verify-captcha', {
         method: 'POST',
         headers: {
@@ -30,27 +29,27 @@ const Register = () => {
         body: JSON.stringify({ captchaToken: captchaValue }),
       });
 
-      const captchaResult = await captchaResponse.json();
-
+      const captchaResult=await captchaResponse.json();
+console.log(captchaResult);
       if (captchaResponse.ok) {
-        // CAPTCHA verified, proceed to register the user
-        const { data } = await register(formData); // Change `Login` to `register`
-        localStorage.setItem('token', data.token);
+        
+        const{data}=await register(formData); 
+        localStorage.setItem('token',data.token);
         setSuccess(true);
-      } else {
+      }else{
         throw new Error(captchaResult.message);
       }
-    } catch (error) {
+    }catch(error) {
       setError('Registration failed. Please try again.');
       console.error('Error during registration', error);
     }
   };
 
-  const handleCaptchaChange = (value) => {
+  const handleCaptchaChange=(value)=>{
     setCaptchaValue(value);
   };
 
-  return (
+  return(
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-6">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Register Form</h2>
@@ -86,7 +85,7 @@ const Register = () => {
           </div>
           <div className="mb-6 flex justify-center">
             <HCaptcha
-              sitekey="458a23e0-c63a-45a0-baa6-dc4abe4ef920" // Replace with your hCaptcha site key
+              sitekey="458a23e0-c63a-45a0-baa6-dc4abe4ef920"
               onChange={handleCaptchaChange}
             />
           </div>
