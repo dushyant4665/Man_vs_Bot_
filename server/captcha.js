@@ -2,11 +2,11 @@ const express = require('express');
 const axios = require('axios');
 const app = express();
 
-app.use(express.json()); // To parse JSON request bodies
+app.use(express.json()); 
 
 app.post('/verify-captcha', async (req, res) => {
   const { captchaToken } = req.body;
-  const secretKey = your-hcaptcha-secret-key; // Replace with your actual secret key
+  const secretKey = your-hcaptcha-secret-key; 
 
   const verificationURL = `https://hcaptcha.com/siteverify`;
   try {
